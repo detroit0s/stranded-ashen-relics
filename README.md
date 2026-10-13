@@ -39,6 +39,6 @@ A top-down action-adventure in the spirit of Zelda. The colony-ship *Perdita* ha
 
 ## Credits
 
-A game by **detroit0s**, made with Claude (Anthropic). Art: the **STRANDED** asset packs by **Penusbmic**.
+A game by **detroit0s**. Art: the **STRANDED** asset packs by **Penusbmic**.
 
 This repository only hosts the game's downloads.
