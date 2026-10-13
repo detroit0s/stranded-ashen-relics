@@ -19,7 +19,6 @@ A top-down action-adventure in the spirit of Zelda. The colony-ship *Perdita* ha
 - **8 Relic Guardians**, **THE UNMADE** in three shapes, and **7 mini-bosses**
 - **7 relic powers**, **12 people** to meet, **16 side quests**, **7 hunts** and **53 codex entries**
 - **Two endings**
-- A tabbed menu in the style of *Breath of the Wild*, and STRANDED's own pixel font
 
 ![The Guardians](screenshots/guardians.png)
 
