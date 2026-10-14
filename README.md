@@ -8,7 +8,7 @@ A top-down action-adventure in the spirit of Zelda. The colony-ship *Perdita* ha
 
 **[Download the latest version for macOS](https://github.com/detroit0s/stranded-ashen-relics/releases/latest)**: one app for both Apple Silicon and Intel Macs.
 
-1. Download `STRANDED-v0.8-macOS.zip` and double-click it to unzip `STRANDED.app`.
+1. Download `STRANDED-v0.8.1-macOS.zip` and double-click it to unzip `STRANDED.app`.
 2. The first time, **right-click the app ▸ Open**, then click **Open** again. The game isn't notarized by Apple, so macOS asks once.
    If it still refuses, go to **System Settings ▸ Privacy & Security** and click **Open Anyway**.
 
