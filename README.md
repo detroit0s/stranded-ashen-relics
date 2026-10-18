@@ -8,18 +8,20 @@ A top-down action-adventure in the spirit of Zelda. The colony-ship *Perdita* ha
 
 **[Download the latest version for macOS](https://github.com/detroit0s/stranded-ashen-relics/releases/latest)**: one app for both Apple Silicon and Intel Macs.
 
-1. Download `STRANDED-v0.9-macOS.zip` and double-click it to unzip `STRANDED.app`.
+1. Download `STRANDED-v0.10-macOS.zip` and double-click it to unzip `STRANDED.app`.
 2. The first time, **right-click the app ▸ Open**, then click **Open** again. The game isn't notarized by Apple, so macOS asks once.
    If it still refuses, go to **System Settings ▸ Privacy & Security** and click **Open Anyway**.
 
 ## What's inside
 
-- **Karush**: 9 regions with sealed passes, beacons for fast travel and a world map
+- **Karush**: 9 regions with sealed passes, beacons for fast travel and a world map, and a dozen landmarks in each: wrecks of the Perdita, skeletons of old beasts, tribe shrines, stone circles, silent machines
+- **Houses you can walk into**: 14 rooms, from crew bunkhouses to fireside cabins, some with somebody at home
+- **Things to cut, smash and dig up**: tall grass, pots, crates, barrels and bushes, and buried caches
 - **8 dimensions and 12 Echo Rifts**: puzzle rooms floating over the void
 - **8 Relic Guardians**, **THE UNMADE** in three shapes, and **7 mini-bosses**
-- **7 relic powers**, **12 people** to meet, **16 side quests**, **7 hunts** and **53 codex entries**
+- **7 relic powers**, **35 people** to meet, **16 side quests**, **7 hunts** and **64 codex entries**
 - **Three difficulties**, chosen when you start a new journey, and **two endings**
-- **An original soundtrack**: themes for the title, villages, dimensions and Guardian battles, ambience for every region, and 78 sound effects
+- **An original soundtrack**: themes for the title, villages, dimensions and Guardian battles, ambience for every region, and 83 sound effects
 
 ![The Guardians](screenshots/guardians.png)
 
