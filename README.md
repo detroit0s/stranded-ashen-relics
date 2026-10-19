@@ -6,11 +6,22 @@ A top-down action-adventure in the spirit of Zelda. The colony-ship *Perdita* ha
 
 ## Download
 
-**[Download the latest version for macOS](https://github.com/detroit0s/stranded-ashen-relics/releases/latest)**: one app for both Apple Silicon and Intel Macs.
+**[Download the latest version](https://github.com/detroit0s/stranded-ashen-relics/releases/latest)** for macOS or Android.
+
+### macOS
+
+One app for both Apple Silicon and Intel Macs.
 
 1. Download `STRANDED-v0.10-macOS.zip` and double-click it to unzip `STRANDED.app`.
 2. The first time, **right-click the app ▸ Open**, then click **Open** again. The game isn't notarized by Apple, so macOS asks once.
    If it still refuses, go to **System Settings ▸ Privacy & Security** and click **Open Anyway**.
+
+### Android
+
+For Android 7.1 or newer, on a 64-bit phone or tablet.
+
+1. Download `STRANDED-v0.10-android.apk` on your phone (or copy it over from a computer) and open it.
+2. The game isn't on the Play Store, so Android asks first: tap **Settings**, allow installing from that app (your browser or Files), then tap **Install**. If Play Protect warns about an unknown app, choose **Install anyway**.
 
 ## What's inside
 
@@ -38,6 +49,10 @@ A top-down action-adventure in the spirit of Zelda. The colony-ship *Perdita* ha
 | Use relic tool / switch tool | F or right-click / R |
 | Eat the best food | H |
 | Menu / items / map / quests | Esc / I / N / Q |
+
+**On Android**, a stick appears under your left thumb, with on-screen buttons on the right. In **Settings ▸ Touch Controls** you can make them bigger or more see-through, swap them to the left hand, fix the stick in place, or drag each button where you like it.
+
+**Controllers** work on every platform: A attack, B dodge, X interact, Y relic, L1 / R1 switch tool / eat, Start menu.
 
 ## Credits
 
