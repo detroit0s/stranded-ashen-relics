@@ -14,7 +14,7 @@ A top-down action-adventure in the spirit of Zelda. The colony-ship *Perdita* ha
 
 One app for both Apple Silicon and Intel Macs.
 
-1. Download `STRANDED-v0.17-macOS.zip` and double-click it to unzip `STRANDED.app`.
+1. Download `STRANDED-v0.18-macOS.zip` and double-click it to unzip `STRANDED.app`.
 2. The first time, **right-click the app ▸ Open**, then click **Open** again. The game isn't notarized by Apple, so macOS asks once.
    If it still refuses, go to **System Settings ▸ Privacy & Security** and click **Open Anyway**.
 
@@ -22,7 +22,7 @@ One app for both Apple Silicon and Intel Macs.
 
 For Android 7.1 or newer, on a 64-bit phone or tablet.
 
-1. Download `STRANDED-v0.17-android.apk` on your phone (or copy it over from a computer) and open it.
+1. Download `STRANDED-v0.18-android.apk` on your phone (or copy it over from a computer) and open it.
 2. The game isn't on the Play Store, so Android asks first: tap **Settings**, allow installing from that app (your browser or Files), then tap **Install**. If Play Protect warns about an unknown app, choose **Install anyway**.
 
 ## What's inside
@@ -32,6 +32,7 @@ For Android 7.1 or newer, on a 64-bit phone or tablet.
 - **Things to cut, smash and dig up**: tall grass, pots, crates, barrels and bushes, and buried caches
 - **8 dimensions and 12 Echo Rifts**: puzzle rooms floating over the void, each dungeon with a twist of its own
 - **A sun that moves**: every relic-heart you take drags Karush's sun closer to dusk, and the world changes with it
+- **Light and shade**: fires, lamps and Guardian beams light the ground; every region has its own light, the dungeons and the night are dark, and everything casts a shadow that grows longer as the sun sinks
 - **Four Dustborn verses to sing**, **relic-hearts to wear**, fishing, a shooting range and a trading chain
 - **8 Relic Guardians**, **THE UNMADE** in three shapes, and **7 mini-bosses**
 - **7 relic powers**, **36 people** to meet, **21 side quests**, **7 hunts** and **73 codex entries**
