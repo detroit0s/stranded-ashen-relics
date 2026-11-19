@@ -154,6 +154,9 @@ dialog.lb .pv { left: 14px; } dialog.lb .nx { right: 14px; }
   .gallery, .cards { grid-template-columns: 1fr; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .dock { left: 10px; bottom: 10px; }
+  #hour { display: none; }                                   /* on a phone: just the sun's colour and the note */
+  .pill { padding: 9px 11px; }
+  button.pill { font-size: 0; } button.pill span { font-size: 15px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
