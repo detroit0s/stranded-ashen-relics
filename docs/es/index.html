@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="es" class="js-off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STRANDED: The Ashen Relics</title>
+<meta name="description" content="Una aventura de acción vista desde arriba, al estilo de Zelda. Despierta a siete dioses dormidos en un mundo rojo y muerto, y arráncales el corazón para volver a casa. Playtest gratis para Windows, macOS y Android.">
+<link rel="icon" href="../assets/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon_180.png">
+<link rel="canonical" href="https://stranded.detroithomelab.me/es/">
+<link rel="alternate" hreflang="en" href="https://stranded.detroithomelab.me/">
+<link rel="alternate" hreflang="es" href="https://stranded.detroithomelab.me/es/">
+<meta property="og:title" content="STRANDED: The Ashen Relics">
+<meta property="og:description" content="Despierta a siete dioses dormidos en un mundo rojo y muerto, y arráncales el corazón para volver a casa.">
+<meta property="og:image" content="https://stranded.detroithomelab.me/assets/share.png">
+<meta property="og:url" content="https://stranded.detroithomelab.me/es/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#140c0a">
+<style>
+:root { --bg: #140c0a; --card: rgba(36,23,15,.82); --line: #3d2a1f; --ink: #f1e6d6; --muted: #bba68f;
+        --gold: #f2c45f; --ember: #ff8a3d; --btn: #e2a03f; --btn-ink: #1a0f08;
+        --sun: 255,214,120; --sun-x: 78%; --sun-y: 8%; --dusk: 0; }
+* { box-sizing: border-box; }
+html { background: var(--bg); scroll-behavior: smooth; }
+body { margin: 0; background: transparent; color: var(--ink); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; overflow-x: hidden; }
+img { image-rendering: pixelated; max-width: 100%; height: auto; display: block; }
+a { color: var(--gold); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+/* the Sun Clock: a low sun behind the page that sinks and reddens as you scroll */
+.sky { position: fixed; inset: 0; z-index: -1; pointer-events: none;
+       background: radial-gradient(circle at var(--sun-x) var(--sun-y), rgba(var(--sun), .30), rgba(var(--sun), .10) 22%, transparent 48%),
+                   linear-gradient(rgba(40,18,40, calc(var(--dusk) * .55)), rgba(10,6,14, calc(var(--dusk) * .7))), var(--bg); }
+.sky::after { content: ""; position: absolute; left: var(--sun-x); top: var(--sun-y); width: 90px; height: 90px; margin: -45px 0 0 -45px;
+       border-radius: 50%; background: rgb(var(--sun)); opacity: .16; filter: blur(2px);
+       box-shadow: 0 0 0 10px rgba(var(--sun), .06), 0 0 0 22px rgba(var(--sun), .04); }
+
+header.hero { position: relative; min-height: 92vh; display: flex; align-items: center; text-align: center; overflow: hidden; }
+.hero .bg { position: absolute; inset: -3%; background: #0d0706 url(../assets/hero.png) center/cover no-repeat; image-rendering: pixelated;
+            animation: drift 40s ease-in-out infinite alternate; transform-origin: 50% 45%; }
+@keyframes drift { from { transform: scale(1.02) translate(0, 0); } to { transform: scale(1.09) translate(-1.5%, 1%); } }
+header.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse at 50% 42%, rgba(20,12,10,.55), rgba(20,12,10,.2) 75%), linear-gradient(transparent 62%, var(--bg)); }
+#embers { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.hero .wrap { position: relative; z-index: 2; width: 100%; padding-top: 48px; padding-bottom: 80px; }
+.lang { position: absolute; top: 16px; right: 16px; z-index: 3; font-size: 14px; background: rgba(0,0,0,.5);
+        border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; text-decoration: none; }
+.logo-wrap { position: relative; width: min(640px, 92%, 95vh); margin: 0 auto 12px; animation: strike .5s cubic-bezier(.2,1.6,.4,1) .35s both; }
+.logo-wrap img { width: 100%; filter: drop-shadow(0 6px 18px rgba(0,0,0,.6)); }
+@keyframes strike { from { transform: scale(1.35); opacity: 0; } 30% { opacity: 1; } to { transform: scale(1); opacity: 1; } }
+.shine { position: absolute; inset: 0; pointer-events: none;
+         -webkit-mask: url(../assets/logo_shine.png) 0 0/100% 100% no-repeat; mask: url(../assets/logo_shine.png) 0 0/100% 100% no-repeat;
+         background: linear-gradient(105deg, transparent 40%, rgba(255,250,225,.85) 47%, rgba(255,250,225,.15) 53%, transparent 60%) no-repeat;
+         background-size: 260% 100%; background-position: 160% 0; animation: shine 7s ease-in-out 1.2s infinite; }
+@keyframes shine { 0% { background-position: 160% 0; } 18%, 100% { background-position: -60% 0; } }
+.flash { position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0;
+         background: radial-gradient(circle at 50% 35%, rgba(255,240,200,.9), rgba(255,160,80,.35) 35%, transparent 70%);
+         animation: flash .7s ease-out .55s; }
+@keyframes flash { 0% { opacity: 0; } 8% { opacity: 1; } 100% { opacity: 0; } }
+.rise { animation: rise .8s ease-out both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.tagline { font-size: clamp(18px, 2.4vw, 22px); max-width: 640px; margin: 8px auto 18px; text-shadow: 0 2px 8px #000; animation-delay: .9s; }
+.badge { display: inline-block; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
+         border: 1px solid rgba(242,196,95,.4); border-radius: 999px; padding: 4px 12px; background: rgba(0,0,0,.45); animation-delay: 1.05s; }
+.buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 26px 0 10px; animation-delay: 1.2s; }
+.btn { display: inline-block; padding: 14px 22px; border-radius: 10px; font-weight: 700; text-decoration: none; transition: transform .12s, box-shadow .12s, background .12s; }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(2px); }
+.btn.primary { background: var(--btn); color: var(--btn-ink); box-shadow: 0 4px 0 #8a5a1c, 0 10px 30px rgba(255,138,61,.25); }
+.btn.primary:hover { background: #f0b552; box-shadow: 0 6px 0 #8a5a1c, 0 14px 36px rgba(255,138,61,.4); }
+.btn.primary:active { box-shadow: 0 1px 0 #8a5a1c, 0 6px 20px rgba(255,138,61,.3); }
+.btn.ghost { border: 1px solid var(--line); background: rgba(0,0,0,.5); color: var(--ink); }
+.latest { color: var(--muted); font-size: 14px; animation-delay: 1.3s; }
+.press { position: absolute; left: 0; right: 0; bottom: 22px; z-index: 2; margin: auto; width: max-content; background: none; border: 0;
+         color: var(--gold); font: 700 15px/1 ui-monospace, Menlo, monospace; letter-spacing: .25em; cursor: pointer; padding: 10px;
+         animation: blink 1.1s steps(2, jump-none) infinite, rise .8s ease-out 1.6s both; text-shadow: 0 0 12px rgba(255,138,61,.6); }
+.press::after { content: "▼"; display: block; font-size: 11px; margin-top: 6px; letter-spacing: 0; }
+@keyframes blink { 50% { opacity: .35; } }
+
+section { padding: 64px 0; border-top: 1px solid rgba(61,42,31,.6); scroll-margin-top: 10px; }
+h2 { color: var(--gold); font-size: clamp(22px, 3vw, 30px); letter-spacing: .02em; margin: 0 0 18px; }
+h2::before { content: "◆"; color: var(--ember); font-size: .6em; vertical-align: .25em; margin-right: .55em; }
+.story p { max-width: 760px; color: #e8dccb; font-size: 18px; }
+.tip { color: var(--muted); font-size: 14px; margin: -8px 0 16px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; cursor: zoom-in;
+         transition: transform .18s, box-shadow .18s, border-color .18s; }
+figure:hover, figure:focus-visible { transform: translateY(-4px); border-color: #7a5233; box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 0 1px rgba(242,196,95,.15); outline: none; }
+figure img { width: 100%; aspect-ratio: 16/9; object-fit: cover; transition: transform .4s; }
+figure:hover img { transform: scale(1.04); }
+figcaption { padding: 8px 12px; font-size: 14px; color: var(--muted); }
+.trailer video { width: 100%; border-radius: 12px; border: 1px solid var(--line); background: #000; display: block; aspect-ratio: 16/9; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; color: #e8dccb; font-size: 16px;
+        transition: transform .18s, border-color .18s; }
+.card:hover { transform: translateY(-3px); border-color: #7a5233; }
+.card b { display: block; color: var(--gold); font-size: 17px; margin-bottom: 4px; }
+.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 10px; text-align: center; }
+.stat .n { display: block; font: 800 clamp(28px, 4vw, 40px)/1.1 ui-monospace, Menlo, monospace; color: var(--gold); text-shadow: 0 0 18px rgba(255,138,61,.35); }
+.stat .l { font-size: 14px; color: var(--muted); }
+.more { color: var(--muted); margin-top: 16px; font-size: 15px; }
+ul { padding-left: 1.2em; margin: 0; }
+li { margin: .5em 0; color: #e8dccb; }
+li::marker { color: var(--ember); }
+.note { color: var(--muted); margin-top: 18px; }
+footer { padding: 36px 0 90px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; text-align: center; }
+footer a { margin: 0 8px; }
+
+/* the Sword at the side: one heart per section, lit as you pass it */
+.sword { position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 20; display: none;
+         flex-direction: column; align-items: center; gap: 0; }
+.sword::before { content: ""; width: 10px; height: 10px; background: #9a7ae8; transform: rotate(45deg); border: 2px solid #1a0f08; margin-bottom: 4px; }
+.sword .grip { width: 6px; height: 18px; background: repeating-linear-gradient(#8c5636 0 3px, #5c3624 3px 6px); border: 1px solid #1a0f08; }
+.sword .blade { width: 10px; background: linear-gradient(90deg, #dfe6ee, #9aa4b2 55%, #5a6272); border: 1px solid #1a0f08; border-top: 0;
+                display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 10px 0 18px; position: relative; }
+.sword .blade::after { content: ""; position: absolute; bottom: -9px; left: -1px; border: 5px solid transparent; border-top: 8px solid #9aa4b2; }
+.sword .guard { width: 40px; height: 7px; background: #d6a04a; border: 1px solid #1a0f08; border-radius: 2px; }
+.heart { position: relative; width: 14px; height: 14px; transform: rotate(45deg); background: #3a1a1c; border: 2px solid #1a0f08;
+         cursor: pointer; transition: background .3s, box-shadow .3s; padding: 0; }
+.heart.lit { background: #d22c3a; box-shadow: 0 0 10px 2px rgba(255,80,80,.55); }
+.heart.mid.lit { background: #ff8040; box-shadow: 0 0 12px 3px rgba(255,138,61,.7); }
+.heart.here { outline: 2px solid var(--gold); outline-offset: 2px; }
+.heart span { position: absolute; right: 26px; top: 50%; transform: rotate(-45deg) translateY(-50%); transform-origin: right center;
+              white-space: nowrap; font-size: 13px; color: var(--ink); background: rgba(0,0,0,.75); border: 1px solid var(--line);
+              padding: 2px 8px; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity .15s; }
+.heart:hover span, .heart:focus-visible span { opacity: 1; }
+@media (min-width: 1180px) { .sword { display: flex; } }
+
+/* the little dock: the Sun Clock's hour, and the music */
+.dock { position: fixed; left: 14px; bottom: 14px; z-index: 30; display: flex; gap: 8px; align-items: center; }
+.pill { font-size: 13px; color: var(--ink); background: rgba(10,6,5,.78); border: 1px solid var(--line); border-radius: 999px;
+        padding: 7px 12px; display: inline-flex; gap: 8px; align-items: center; backdrop-filter: blur(4px); }
+.pill i { width: 10px; height: 10px; border-radius: 50%; background: rgb(var(--sun)); box-shadow: 0 0 8px rgb(var(--sun)); font-style: normal; }
+button.pill { cursor: pointer; font: inherit; font-size: 13px; }
+button.pill[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+
+/* the lightbox */
+dialog.lb { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 96vh; color: var(--ink); }
+dialog.lb::backdrop { background: rgba(5,3,2,.88); }
+dialog.lb img { max-width: 96vw; max-height: 86vh; border-radius: 8px; border: 1px solid var(--line); }
+dialog.lb p { text-align: center; margin: 10px 0 0; color: var(--muted); }
+dialog.lb button { position: fixed; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.6); color: var(--ink);
+                   border: 1px solid var(--line); border-radius: 999px; width: 46px; height: 46px; font-size: 22px; cursor: pointer; }
+dialog.lb .x { top: 18px; right: 18px; transform: none; }
+dialog.lb .pv { left: 14px; } dialog.lb .nx { right: 14px; }
+
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.js-off .reveal { opacity: 1; transform: none; }
+
+@media (max-width: 760px) {
+  header.hero { min-height: 84vh; }
+  .gallery, .cards { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .dock { left: 10px; bottom: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+<div class="flash" aria-hidden="true"></div>
+<header class="hero" id="s0" data-heart>
+  <div class="bg" aria-hidden="true"></div>
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <a class="lang" href="../" hreflang="en" lang="en">English</a>
+  <div class="wrap">
+    <div class="logo-wrap"><img src="../assets/logo.png" alt="STRANDED: The Ashen Relics" width="852" height="472"><div class="shine" aria-hidden="true"></div></div>
+    <p class="tagline rise">Despierta a siete dioses dormidos en un mundo rojo y muerto, y arráncales el corazón para volver a casa.</p>
+    <span class="badge rise">Playtest gratis · Windows · macOS · Android</span>
+    <div class="buttons rise">
+      <a class="btn primary" href="https://detroit-0s.itch.io/stranded-the-ashen-relics">Descargar gratis en itch.io</a>
+      <a class="btn ghost" href="https://github.com/detroit0s/stranded-ashen-relics/releases">Todas las versiones en GitHub</a>
+    </div>
+    <p class="latest rise">Última versión: v0.17</p>
+  </div>
+  <button class="press" aria-label="La historia">PULSA START</button>
+</header>
+<nav class="sword" aria-label="STRANDED: The Ashen Relics">
+  <div class="grip"></div><div class="guard"></div>
+  <div class="blade">
+<button class="heart" aria-label="Inicio"><span>Inicio</span></button>
+<button class="heart" aria-label="La historia"><span>La historia</span></button>
+<button class="heart" aria-label="Un vistazo"><span>Un vistazo</span></button>
+<button class="heart mid" aria-label="Tráiler"><span>Tráiler</span></button>
+<button class="heart" aria-label="Novedades"><span>Novedades</span></button>
+<button class="heart" aria-label="Qué trae"><span>Qué trae</span></button>
+<button class="heart" aria-label="Instalación"><span>Instalación</span></button>
+  </div>
+</nav>
+<main class="wrap">
+  <section class="story reveal" id="s1" data-heart>
+    <h2>Un mundo muerto. Siete dioses dormidos. Una sola salida.</h2>
+    <p>La nave colonia <b>Perdita</b> cayó de la oscuridad y se rompió sobre <b>Karush</b>, un mundo rojo de ceniza y hueso bajo un sol que nunca se pone. Eres el Wayfarer, el último de la tripulación que sigue respirando.</p><p>El núcleo de la nave está destrozado, y la única energía que queda en Karush late dentro de los <b>Guardianes de las Reliquias</b>: dioses que los Dustborn encerraron en máquinas hace mil años. Despiértalos. Toma sus corazones. Y descubre por qué los Dustborn prefirieron deshacerse antes que enfrentar lo que construyeron.</p>
+  </section>
+  <section class="reveal" id="s2" data-heart>
+    <h2>Un vistazo</h2>
+    <p class="tip">Haz clic en una imagen para verla en grande.</p>
+    <div class="gallery">
+<figure role="button" aria-label="El Campo de Espadas"><img src="../assets/shot_field.png" alt="El Campo de Espadas" loading="lazy" width="1920" height="1080"><figcaption>El Campo de Espadas</figcaption></figure>
+<figure role="button" aria-label="Despierta a los Guardianes"><img src="../assets/shot_boss1.png" alt="Despierta a los Guardianes" loading="lazy" width="1920" height="1080"><figcaption>Despierta a los Guardianes</figcaption></figure>
+<figure role="button" aria-label="El campamento del naufragio"><img src="../assets/shot_camp.png" alt="El campamento del naufragio" loading="lazy" width="1920" height="1080"><figcaption>El campamento del naufragio</figcaption></figure>
+<figure role="button" aria-label="Dimensiones sobre el vacío"><img src="../assets/shot_void.png" alt="Dimensiones sobre el vacío" loading="lazy" width="1920" height="1080"><figcaption>Dimensiones sobre el vacío</figcaption></figure>
+<figure role="button" aria-label="Cada Guardián pelea a su manera"><img src="../assets/shot_boss3.png" alt="Cada Guardián pelea a su manera" loading="lazy" width="1920" height="1080"><figcaption>Cada Guardián pelea a su manera</figcaption></figure>
+<figure role="button" aria-label="Lo que construyeron los Dustborn"><img src="../assets/shot_unmade.png" alt="Lo que construyeron los Dustborn" loading="lazy" width="1920" height="1080"><figcaption>Lo que construyeron los Dustborn</figcaption></figure>
+    </div>
+  </section>
+  <section class="trailer reveal" id="s3" data-heart>
+    <h2>Mira el tráiler</h2>
+    <video controls preload="none" playsinline poster="../assets/trailer_poster.jpg" width="1280" height="720">
+      <source src="../assets/trailer.mp4" type="video/mp4">
+    </video>
+  </section>
+  <section class="reveal" id="s4" data-heart>
+    <h2>Novedades de la v0.17</h2>
+    <div class="cards">
+<div class="card"><b>El sol se mueve</b>Cada corazón de reliquia que tomas acerca el sol de Karush al atardecer, y el mundo cambia con él. (Baja por esta página y mira.)</div>
+<div class="card"><b>Canciones</b>Aprende cuatro versos de los Dustborn y tócalos con cuatro notas: Sueño, Despertar, Descanso y Regreso.</div>
+<div class="card"><b>Gente con historias</b>Misiones secundarias en las que tú decides.</div>
+<div class="card"><b>Guardas de los Guardianes</b>Solo el poder de su propia mazmorra rompe la guarda de cada Guardián, y cada mazmorra tiene su giro.</div>
+<div class="card"><b>Lleva los corazones</b>Hasta tres a la vez, cada uno con un don y un precio.</div>
+<div class="card"><b>Y más</b>Un mapa de verdad, pesca, un campo de tiro, una cadena de trueques, la primera noche de Karush y un tercer final oculto.</div>
+    </div>
+  </section>
+  <section class="reveal" id="s5" data-heart>
+    <h2>Qué trae</h2>
+    <div class="stats">
+<div class="stat"><span class="n" data-to="9">9</span><span class="l">regiones</span></div>
+<div class="stat"><span class="n" data-to="8">8</span><span class="l">dimensiones</span></div>
+<div class="stat"><span class="n" data-to="12">12</span><span class="l">Grietas del Eco</span></div>
+<div class="stat"><span class="n" data-to="8">8</span><span class="l">Guardianes</span></div>
+<div class="stat"><span class="n" data-to="7">7</span><span class="l">minijefes</span></div>
+<div class="stat"><span class="n" data-to="7">7</span><span class="l">poderes de reliquia</span></div>
+<div class="stat"><span class="n" data-to="36">36</span><span class="l">personajes</span></div>
+<div class="stat"><span class="n" data-to="21">21</span><span class="l">misiones secundarias</span></div>
+<div class="stat"><span class="n" data-to="73">73</span><span class="l">entradas del códice</span></div>
+<div class="stat"><span class="n" data-to="3">3</span><span class="l">finales</span></div>
+    </div>
+    <p class="more">Unas 10 a 15 horas · tres dificultades · teclado, mando, y controles táctiles en Android · el juego está en inglés</p>
+  </section>
+  <section class="install reveal" id="s6" data-heart>
+    <h2>Instalación</h2>
+    <ul><li><b>Windows:</b> primero descomprime la carpeta entera y luego abre STRANDED.exe. Si aparece SmartScreen, pulsa <i>Más información ▸ Ejecutar de todas formas</i>.</li>
+<li><b>macOS:</b> descomprime y, la primera vez, clic derecho en STRANDED.app ▸ <i>Abrir</i>, y otra vez Abrir.</li>
+<li><b>Android:</b> abre el APK en tu teléfono y permite la instalación cuando te lo pida. Una versión nueva se instala encima de la anterior.</li>
+<li>Tu partida se conserva de una versión a otra, y el juego te avisa en la pantalla de título cuando sale una versión nueva.</li></ul>
+    <p class="note">Es un playtest: cuéntame qué te parece en los comentarios de itch.io.</p>
+    <div class="buttons" style="justify-content:flex-start;animation:none"><a class="btn primary" href="https://detroit-0s.itch.io/stranded-the-ashen-relics">Descargar gratis en itch.io</a></div>
+  </section>
+</main>
+<footer>
+  <p>Un juego de <b>detroit0s</b>. Arte: los paquetes <b>STRANDED</b> de <b>Penusbmic</b>.</p>
+  <p><a href="https://detroit-0s.itch.io/stranded-the-ashen-relics">itch.io</a><a href="https://github.com/detroit0s/stranded-ashen-relics/releases">GitHub</a><a href="../" lang="en">English</a></p>
+</footer>
+<div class="dock">
+  <span class="pill" aria-live="polite"><i aria-hidden="true"></i><span id="hour">Reloj de sol: Mediodía</span></span>
+  <button class="pill" id="mbtn" aria-pressed="false" data-hit="../assets/title_hit.m4a"><span aria-hidden="true">♪</span> Música: no</button>
+</div>
+<audio id="music" src="../assets/title.m4a" loop preload="none"></audio>
+<dialog class="lb" aria-label="Un vistazo">
+  <img alt=""><p></p>
+  <button class="x" aria-label="Cerrar">✕</button><button class="pv" aria-label="Anterior">‹</button><button class="nx" aria-label="Siguiente">›</button>
+</dialog>
+<script type="application/json" id="i18n">{"stages": ["Mediodía", "Ámbar", "Rojo", "Ocaso"], "sunclock": "Reloj de sol", "music_on": "Música: sí", "music_off": "Música: no"}</script>
+<script>
+(() => {
+  const L = JSON.parse(document.getElementById('i18n').textContent);
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.remove('js-off');
+
+  // ---- embers and ash over the header, and a burst of sparks when the logo strikes
+  const cv = document.getElementById('embers'), hero = document.querySelector('header.hero');
+  const cx = cv.getContext('2d');
+  let W = 0, H = 0, parts = [], heroOn = true;
+  const PX = 3;                                    // drawn chunky, like the game's pixels
+  function size() { W = cv.width = Math.ceil(hero.offsetWidth / PX); H = cv.height = Math.ceil(hero.offsetHeight / PX); }
+  function ember(burst) {
+    if (burst) {
+      const a = Math.random() * Math.PI * 2, s = 0.6 + Math.random() * 2.6;
+      return { x: W / 2, y: H * 0.36, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 0.6, life: 50 + Math.random() * 40, kind: 2 };
+    }
+    const ash = Math.random() < 0.45;
+    return { x: Math.random() * W, y: ash ? -2 : H + 2, vx: (Math.random() - 0.5) * 0.15, vy: ash ? 0.12 + Math.random() * 0.18 : -(0.1 + Math.random() * 0.3),
+             life: 400 + Math.random() * 500, kind: ash ? 0 : 1, ph: Math.random() * 6 };
+  }
+  size(); addEventListener('resize', size);
+  for (let i = 0; i < 70; i++) { const p = ember(); p.y = Math.random() * H; parts.push(p); }
+  if (!calm) setTimeout(() => { for (let i = 0; i < 70; i++) parts.push(ember(true)); }, 600);
+  new IntersectionObserver(e => heroOn = e[0].isIntersecting).observe(hero);
+  let t = 0;
+  function frame() {
+    requestAnimationFrame(frame);
+    if (!heroOn || document.hidden) return;
+    t++;
+    cx.clearRect(0, 0, W, H);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.x += p.vx + (p.kind === 1 ? Math.sin((t + p.ph * 60) / 50) * 0.08 : 0); p.y += p.vy; p.life--;
+      if (p.kind === 2) { p.vy += 0.03; p.vx *= 0.985; }
+      if (p.life <= 0 || p.y < -4 || p.y > H + 4 || p.x < -4 || p.x > W + 4) {
+        parts.splice(i, 1);
+        if (p.kind !== 2) parts.push(ember());
+        continue;
+      }
+      const a = p.kind === 2 ? Math.min(1, p.life / 30) : 0.55 + 0.45 * Math.sin((t + p.ph * 100) / 20);
+      cx.fillStyle = p.kind === 0 ? `rgba(190,170,160,${0.35 * a})` : p.kind === 1 ? `rgba(255,${120 + (p.ph * 20 | 0)},50,${a})` : `rgba(255,220,140,${a})`;
+      cx.fillRect(p.x | 0, p.y | 0, 1, 1);
+    }
+  }
+  if (!calm) frame(); else { cx.fillStyle = 'rgba(255,140,60,.8)'; parts.forEach(p => cx.fillRect(p.x | 0, p.y | 0, 1, 1)); }
+
+  // a touch of depth: the land shifts a little under the mouse
+  const bg = hero.querySelector('.bg');
+  if (!calm && matchMedia('(pointer: fine)').matches)
+    hero.addEventListener('mousemove', e => {
+      const dx = (e.clientX / innerWidth - 0.5) * -14, dy = (e.clientY / innerHeight - 0.5) * -10;
+      bg.style.translate = `${dx}px ${dy}px`;
+    });
+
+  // PRESS START (or Enter / Space at the top) moves on to the story
+  const go = () => document.getElementById('s1').scrollIntoView({ behavior: calm ? 'auto' : 'smooth' });
+  document.querySelector('.press').addEventListener('click', go);
+  addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && scrollY < 40 && !document.querySelector('dialog[open]') &&
+        !(e.target.closest && e.target.closest('a,button,video,input'))) { e.preventDefault(); go(); }
+  });
+
+  // ---- the Sun Clock: noon at the top of the page, dusk at the bottom
+  const root = document.documentElement.style, hour = document.getElementById('hour');
+  const SUNS = [[255, 214, 120], [255, 168, 72], [232, 92, 52], [150, 60, 110]];
+  let stage = -1;
+  function sun() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = Math.max(0, Math.min(1, max > 0 ? scrollY / max : 0));
+    const f = p * (SUNS.length - 1), i = Math.min(SUNS.length - 2, Math.floor(f)), k = f - i;
+    const c = SUNS[i].map((v, j) => Math.round(v + (SUNS[i + 1][j] - v) * k));
+    root.setProperty('--sun', c.join(','));
+    root.setProperty('--sun-x', (78 - p * 18) + '%');
+    root.setProperty('--sun-y', (8 + p * 70) + '%');
+    root.setProperty('--dusk', Math.max(0, (p - 0.45) / 0.55).toFixed(3));
+    const s = Math.min(SUNS.length - 1, Math.round(f));
+    if (s !== stage) { stage = s; hour.textContent = L.sunclock + ': ' + L.stages[s]; }
+  }
+
+  // ---- the seven hearts: one per section, lit once you've reached it
+  const secs = [...document.querySelectorAll('[data-heart]')], hearts = [...document.querySelectorAll('.heart')];
+  hearts.forEach((h, i) => h.addEventListener('click', () => secs[i].scrollIntoView({ behavior: calm ? 'auto' : 'smooth' })));
+  function lit() {
+    let here = 0;
+    secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) here = i; });
+    hearts.forEach((h, i) => { h.classList.toggle('lit', i <= here); h.classList.toggle('here', i === here); });
+  }
+  let busy = false;
+  addEventListener('scroll', () => { if (!busy) { busy = true; requestAnimationFrame(() => { sun(); lit(); busy = false; }); } }, { passive: true });
+  addEventListener('resize', () => { sun(); lit(); });
+  sun(); lit();
+
+  // ---- sections rise in, and the numbers count up, as they come into view
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in'); io.unobserve(e.target);
+    e.target.querySelectorAll('.n[data-to]').forEach(n => {
+      const to = +n.dataset.to;
+      if (calm) { n.textContent = to; return; }
+      const t0 = performance.now(), d = 900 + to * 8;
+      const step = now => { const k = Math.min(1, (now - t0) / d); n.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---- screenshots open large (arrows to move between them, Esc to close)
+  const lb = document.querySelector('dialog.lb'), lbImg = lb.querySelector('img'), lbCap = lb.querySelector('p');
+  const figs = [...document.querySelectorAll('.gallery figure')];
+  let cur = 0;
+  function show(i) { cur = (i + figs.length) % figs.length; const im = figs[cur].querySelector('img');
+                     lbImg.src = im.src; lbImg.alt = im.alt; lbCap.textContent = figs[cur].querySelector('figcaption').textContent; }
+  figs.forEach((f, i) => {
+    f.tabIndex = 0;
+    f.addEventListener('click', () => { show(i); lb.showModal(); });
+    f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); lb.showModal(); } });
+  });
+  lb.querySelector('.x').onclick = () => lb.close();
+  lb.querySelector('.pv').onclick = () => show(cur - 1);
+  lb.querySelector('.nx').onclick = () => show(cur + 1);
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+  lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+
+  // ---- the title theme, only when asked; the trailer pauses it
+  const music = document.getElementById('music'), btn = document.getElementById('mbtn'), hit = new Audio(btn.dataset.hit);
+  music.volume = 0.4; hit.volume = 0.5;
+  function setMusic(on) {
+    btn.setAttribute('aria-pressed', on); btn.lastChild.textContent = ' ' + (on ? L.music_on : L.music_off);
+    if (on) { hit.currentTime = 0; hit.play().catch(() => {}); music.play().catch(() => setMusic(false)); } else music.pause();
+  }
+  btn.addEventListener('click', () => setMusic(btn.getAttribute('aria-pressed') !== 'true'));
+  const vid = document.querySelector('.trailer video');
+  if (vid) vid.addEventListener('play', () => setMusic(false));
+})();
+</script>
+</body>
+</html>
